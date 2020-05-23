@@ -1,2 +1,3 @@
 #! /bin/sh
-docker build -t jeromerobert/wine-mingw64 .
+docker build -t jeromerobert/wine-mingw64:latest .
+docker build -t jeromerobert/wine-mingw64:1.1 .

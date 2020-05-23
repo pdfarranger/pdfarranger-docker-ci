@@ -9,10 +9,10 @@ RUN pacman -Sy --noconfirm mingw-w64-x86_64-gtk3 mingw-w64-x86_64-python-gobject
  mingw-w64-x86_64-python-cairo mingw-w64-x86_64-poppler mingw-w64-x86_64-gcc \
  mingw-w64-x86_64-python-lxml mingw-w64-x86_64-qpdf mingw-w64-x86_64-pybind11 \
  mingw-w64-x86_64-gettext mingw-w64-x86_64-gnutls mingw-w64-x86_64-python-pip \
- wine-staging
+ mingw-w64-x86_64-python-pillow wine-staging
 ENV WINEDEBUG=-all
 RUN wine /mingw64/bin/gdk-pixbuf-query-loaders.exe > /mingw64/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache \
  && cd /mingw64/share/glib-2.0/schemas \
  && wine /mingw64/bin/glib-compile-schemas.exe . \
- && wine /mingw64/bin/python3.exe -m pip install pikepdf https://github.com/jeromerobert/cx_Freeze/zipball/pdfarranger \
+ && wine /mingw64/bin/python3.exe -m pip install img2pdf pikepdf https://github.com/jeromerobert/cx_Freeze/zipball/pdfarranger \
  && wineserver --wait
