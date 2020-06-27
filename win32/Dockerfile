@@ -14,5 +14,5 @@ ENV WINEDEBUG=-all
 RUN wine /mingw64/bin/gdk-pixbuf-query-loaders.exe > /mingw64/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache \
  && cd /mingw64/share/glib-2.0/schemas \
  && wine cmd /c /mingw64/bin/glib-compile-schemas.exe . \
- && wine /mingw64/bin/python3.exe -m pip install keyboard img2pdf pikepdf https://github.com/jeromerobert/cx_Freeze/zipball/pdfarranger \
+ && wine /mingw64/bin/python3.exe -m pip install keyboard 'img2pdf>=0.3.4' 'pikepdf>=1.15.1' https://github.com/jeromerobert/cx_Freeze/zipball/pdfarranger \
  && wineserver --wait
