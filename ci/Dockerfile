@@ -1,6 +1,5 @@
-FROM debian:testing-slim
-RUN apt update && apt install -y --no-install-recommends \
- python3-distutils-extra python3-wheel python3-gi \
- python3-pikepdf python3-gi-cairo gir1.2-gtk-3.0 \
- gir1.2-poppler-0.18 python3-setuptools python3-pip \
- desktop-file-utils appstream
+FROM alpine:3.12.1
+RUN apk add  py3-pip py3-distutils-extra py3-pikepdf py3-cairo py3-atspi \
+ py3-wheel py3-gobject3 py3-pillow poppler-glib gtk+3.0 intltool xvfb dbus \
+ appstream desktop-file-utils
+RUN pip install https://gitlab.com/dogtail/dogtail/-/archive/6817c16/dogtail-6817c16.tar.gz coverage python-dateutil img2pdf
