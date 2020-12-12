@@ -1,0 +1,5 @@
+# need docker.io prefix due to podman, remove if you use real docker
+docker build -t docker.io/dreua/pdfarranger-docker-rpm .
+docker tag docker.io/dreua/pdfarranger-docker-rpm:latest dreua/pdfarranger-docker-rpm:1.4
+
+# docker push dreua/pdfarranger-docker-rpm:tagname

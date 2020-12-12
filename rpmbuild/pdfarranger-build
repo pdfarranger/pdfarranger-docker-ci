@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# This is supposed to run inside the docker container!
+
+echo "Downloading spec file from $GITHUB_REPOSITORY at $GITHUB_SHA"
+URL="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/${GITHUB_SHA}/pdfarranger.spec"
+echo "URL: $URL"
+
+# Download spec
+curl -o pdfarranger.spec -L $URL
+
+echo "Download source as described in spec"
+spectool -g pdfarranger.spec
+
+mkdir -p ~/rpmbuild/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
+
+mv pdfarranger-*.tar.gz ~/rpmbuild/SOURCES/
+
+echo "Starting rpm build"
+rpmbuild -ba pdfarranger.spec 
+
+
+# Installation test would also be possible but takes some time and bandwith so
+# let's don't do this by default. Consider installing the dependencies in
+# the docker image if you want to go that route.
+# (This pulls a lot of dependecies including grub and systemd modules!)
+# dnf install ~/rpmbuild/RPMS/noarch/pdfarranger-*.noarch.rpm
+
