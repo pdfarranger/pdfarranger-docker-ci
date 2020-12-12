@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# This file is for developing purposes - run a docker container with environment
+# variables that would otherwise be set by Github CI.
+
+# Change to your needs:
+export GITHUB_REPOSITORY="dreua/pdfarranger"
+# Build currently checked out SHA in ~/git/pdfarranger, don't forget to push
+export GITHUB_SHA="$(git --git-dir=/home/$USER/git/pdfarranger/.git rev-parse HEAD)"
+
+# Interactive docker run
+docker run -ti \
+    --env GITHUB_REPOSITORY \
+    --env GITHUB_SHA \
+    pdfarranger-docker-rpm \
+    bash
+# now you can interactively run /pdfarranger/pdfaranger-build and it should work
