@@ -10,7 +10,7 @@ RUN make -j$(($(nproc)*2)) install
 RUN find /usr/local -name "*.so" -exec strip {} \;
 
 FROM alpine:20200917
-RUN apk add pacman curl
+RUN apk add pacman curl libgcc py3-distutils-extra py3-setuptools intltool
 RUN mkdir -p /etc/pacman.d \
  && curl https://raw.githubusercontent.com/msys2/MSYS2-packages/master/pacman-mirrors/mirrorlist.mingw64 | grep -v sourceforge.net > /etc/pacman.d/mirrorlist.mingw64 \
  && echo -e '[mingw64]\nInclude = /etc/pacman.d/mirrorlist.mingw64' >> /etc/pacman.conf \
@@ -25,7 +25,6 @@ RUN pacman -Sy --noconfirm mingw-w64-x86_64-gtk3 mingw-w64-x86_64-python-gobject
  mingw-w64-x86_64-gettext mingw-w64-x86_64-gnutls mingw-w64-x86_64-python-pip \
  mingw-w64-x86_64-python-pillow
 COPY --from=wine /usr/local/ /usr/local/
-RUN apk add libgcc
 RUN cd /usr/local/bin && ln -s wine64 wine
 # Creating loaders.cache with gdk-pixbuf-query-loaders.exe does not
 # work because gdiplus.dll is not found
