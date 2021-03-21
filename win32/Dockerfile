@@ -1,6 +1,6 @@
-FROM alpine:20200917 AS wine
+FROM alpine:3.13.2 AS wine
 RUN apk add curl build-base flex bison bash gawk autoconf linux-headers
-# Wine 5.19, 5.15 freeze. 5.1, 5.8, 5.13 work.
+# Wine 6.4, 5.19, 5.15, 5.14 freeze. 5.1, 5.8, 5.13 work.
 RUN curl https://dl.winehq.org/wine/source/5.x/wine-5.13.tar.xz | tar xJ
 RUN curl -L https://github.com/wine-staging/wine-staging/archive/v5.13.tar.gz | tar xz
 RUN cd wine-staging-*/patches && ./patchinstall.sh DESTDIR=/wine-5.13 imagehlp-BindImageEx
@@ -9,7 +9,7 @@ RUN ./configure --enable-win64 --without-x --without-freetype
 RUN make -j$(($(nproc)*2)) install
 RUN find /usr/local -name "*.so" -exec strip {} \;
 
-FROM alpine:20200917
+FROM alpine:3.13.2
 RUN apk add pacman curl libgcc py3-distutils-extra py3-setuptools intltool
 RUN mkdir -p /etc/pacman.d \
  && curl https://raw.githubusercontent.com/msys2/MSYS2-packages/master/pacman-mirrors/mirrorlist.mingw64 | grep -v sourceforge.net > /etc/pacman.d/mirrorlist.mingw64 \
@@ -33,5 +33,5 @@ RUN wine reg add "HKLM\\System\\CurrentControlSet\\Control\\Session Manager\\Env
  && wineserver --wait
 RUN cd /mingw64/share/glib-2.0/schemas \
  && wine cmd /c /mingw64/bin/glib-compile-schemas.exe . \
- && wine python3.exe -m pip install keyboard 'img2pdf==0.4.0' 'pikepdf==1.19.3' https://github.com/jeromerobert/cx_Freeze/zipball/pdfarranger
+ && wine python3.exe -m pip install keyboard 'img2pdf==0.4.0' 'pikepdf==2.9.1' https://github.com/jeromerobert/cx_Freeze/zipball/pdfarranger
 ENV WINEDEBUG=-all
