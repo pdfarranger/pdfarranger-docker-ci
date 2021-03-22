@@ -1,0 +1,26 @@
+commit cf7be9eadcbc8a1953a979354551ea3a229a9d41
+Author: Jerome Robert <jeromerobert@gmx.com>
+Date:   Mon Mar 22 19:31:21 2021 +0100
+
+    Fix mingw64 build
+
+diff --git a/setup.py b/setup.py
+index 8810b81..7942544 100644
+--- a/setup.py
++++ b/setup.py
+@@ -1,4 +1,5 @@
+ import sys
++import sysconfig
+ from glob import glob
+ from os import environ
+ from os.path import dirname, join
+@@ -52,6 +53,9 @@ if sys.platform == 'cygwin':
+     eca = ext_modules[0].extra_compile_args
+     eca[eca.index('-std=c++14')] = '-std=gnu++14'
+ 
++if sysconfig.get_platform() == 'mingw':
++    ext_modules[0].extra_compile_args = ['-std=c++14']
++
+ # Debug build
+ # ext_modules[0].extra_compile_args.append('-g3')
+ 
