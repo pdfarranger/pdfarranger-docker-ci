@@ -44,5 +44,5 @@ RUN curl https://files.pythonhosted.org/packages/36/db/7d6ab33f7fc4e0d750379a9b0
  && cd pikepdf-2.9.2 && patch setup.py /pikepdf.patch \
  && find . -mtime +13700 -exec touch {} \; \
  && wine python3.exe setup.py install && cd .. && rm -rf pikepdf-2.9.2
-RUN wine python3.exe -m pip install python-dateutil keyboard 'img2pdf==0.4.0'  https://github.com/jeromerobert/cx_Freeze/zipball/pdfarranger && wineserver --wait
+RUN wine python3.exe -m pip install packaging python-dateutil keyboard 'img2pdf==0.4.0'  https://github.com/jeromerobert/cx_Freeze/zipball/pdfarranger && wineserver --wait
 ENV WINEDEBUG=-all
