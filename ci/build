@@ -1,4 +1,4 @@
 #! /bin/sh
 docker build -t jeromerobert/pdfarranger-docker-ci .
-docker tag jeromerobert/pdfarranger-docker-ci:latest jeromerobert/pdfarranger-docker-ci:1.2
+docker tag jeromerobert/pdfarranger-docker-ci:latest jeromerobert/pdfarranger-docker-ci:1.3
 docker tag jeromerobert/pdfarranger-docker-ci:latest jeromerobert/pdfarranger-docker-ci:dev
