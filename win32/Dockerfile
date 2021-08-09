@@ -34,15 +34,6 @@ RUN wine reg add "HKLM\\System\\CurrentControlSet\\Control\\Session Manager\\Env
 RUN cd /mingw64/share/glib-2.0/schemas \
  && wine cmd /c /mingw64/bin/glib-compile-schemas.exe . \
  && wineserver --wait
-RUN apk add patch
-# We need patching either pybind11 or pikepdf (no need to patch both)
-# https://github.com/pybind/pybind11/pull/2921
-# https://github.com/pikepdf/pikepdf/pull/184
-ADD pikepdf.patch /
-# find touch is needed to avoid "ZIP does not support timestamps before 1980"
-RUN curl https://files.pythonhosted.org/packages/36/db/7d6ab33f7fc4e0d750379a9b05b5cdc40ed6183aff5934b8e787fd1d3c98/pikepdf-2.9.2.tar.gz | tar xz \
- && cd pikepdf-2.9.2 && patch setup.py /pikepdf.patch \
- && find . -mtime +13700 -exec touch {} \; \
- && wine python3.exe setup.py install && cd .. && rm -rf pikepdf-2.9.2
-RUN wine python3.exe -m pip install packaging python-dateutil keyboard 'img2pdf==0.4.0'  https://github.com/jeromerobert/cx_Freeze/zipball/pdfarranger && wineserver --wait
+RUN wine python3.exe -m pip install 'pikepdf==2.16.1' 'pybind11==2.7.1' packaging python-dateutil keyboard 'img2pdf==0.4.0' \
+  https://github.com/jeromerobert/cx_Freeze/zipball/pdfarranger && wineserver --wait
 ENV WINEDEBUG=-all
