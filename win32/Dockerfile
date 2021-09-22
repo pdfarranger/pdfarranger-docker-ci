@@ -35,5 +35,5 @@ RUN cd /mingw64/share/glib-2.0/schemas \
  && wine cmd /c /mingw64/bin/glib-compile-schemas.exe . \
  && wineserver --wait
 RUN wine python3.exe -m pip install 'pikepdf==2.16.1' 'pybind11==2.7.1' packaging python-dateutil keyboard 'img2pdf==0.4.0' \
-  https://github.com/jeromerobert/cx_Freeze/zipball/pdfarranger && wineserver --wait
+  https://github.com/jeromerobert/cx_Freeze/zipball/db061df6f0b6bfc190a9557470e4436dc743dc8a && wineserver --wait
 ENV WINEDEBUG=-all
