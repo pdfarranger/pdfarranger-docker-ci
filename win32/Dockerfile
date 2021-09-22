@@ -1,4 +1,5 @@
-FROM alpine:3.14.1 AS wine
+FROM alpine:3.14.2 AS wine
+LABEL image=jeromerobert/wine-mingw64 stage=wine
 RUN apk add curl build-base flex bison bash gawk autoconf linux-headers
 # Wine 6.4, 5.19, 5.15, 5.14 freeze. 5.1, 5.8, 5.13 work.
 RUN curl https://dl.winehq.org/wine/source/5.x/wine-5.13.tar.xz | tar xJ
@@ -9,7 +10,7 @@ RUN ./configure~ --enable-win64 --without-x --without-freetype
 RUN make -j$(($(nproc)*2)) install
 RUN find /usr/local -name "*.so" -exec strip {} \;
 
-FROM alpine:3.14.1
+FROM alpine:3.14.2
 RUN apk add pacman curl libgcc py3-distutils-extra py3-setuptools intltool
 RUN mkdir -p /etc/pacman.d \
  && curl https://raw.githubusercontent.com/msys2/MSYS2-packages/master/pacman-mirrors/mirrorlist.mingw | sed 's|$repo|x86_64|g' > /etc/pacman.d/mirrorlist.mingw64 \
