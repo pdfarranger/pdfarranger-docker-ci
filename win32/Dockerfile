@@ -1,4 +1,4 @@
-FROM alpine:3.14.2 AS wine
+FROM alpine:3.15.0 AS wine
 LABEL image=jeromerobert/wine-mingw64 stage=wine
 RUN apk add curl build-base flex bison bash gawk autoconf linux-headers
 # Wine 6.4, 5.19, 5.15, 5.14 freeze. 5.1, 5.8, 5.13 work.
@@ -10,8 +10,8 @@ RUN ./configure~ --enable-win64 --without-x --without-freetype
 RUN make -j$(($(nproc)*2)) install
 RUN find /usr/local -name "*.so" -exec strip {} \;
 
-FROM alpine:3.14.2
-RUN apk add pacman curl libgcc py3-distutils-extra py3-setuptools intltool
+FROM alpine:3.15.0
+RUN apk add pacman-makepkg curl libgcc py3-distutils-extra py3-setuptools intltool
 RUN mkdir -p /etc/pacman.d \
  && curl https://raw.githubusercontent.com/msys2/MSYS2-packages/master/pacman-mirrors/mirrorlist.mingw | sed 's|$repo|x86_64|g' > /etc/pacman.d/mirrorlist.mingw64 \
  && echo -e '[mingw64]\nInclude = /etc/pacman.d/mirrorlist.mingw64' >> /etc/pacman.conf \
@@ -35,6 +35,11 @@ RUN wine reg add "HKLM\\System\\CurrentControlSet\\Control\\Session Manager\\Env
 RUN cd /mingw64/share/glib-2.0/schemas \
  && wine cmd /c /mingw64/bin/glib-compile-schemas.exe . \
  && wineserver --wait
-RUN wine python3.exe -m pip install 'pikepdf==2.16.1' 'pybind11==2.7.1' packaging python-dateutil keyboard 'img2pdf==0.4.0' \
-  https://github.com/jeromerobert/cx_Freeze/zipball/db061df6f0b6bfc190a9557470e4436dc743dc8a && wineserver --wait
 ENV WINEDEBUG=-all
+RUN wine python3.exe -m pip install wheel packaging python-dateutil keyboard 'pybind11==2.9.0' \
+ && curl -L 'https://files.pythonhosted.org/packages/1f/d3/553847428391192ea7a2ab8f24be3b42071d515bca7be78ad094f53160c6/pikepdf-4.3.1.tar.gz#sha256=8836e6060534c7245c8d736e93600667b928c767a012a73bb567f56bbe3d985c' | tar xz \
+ && cd pikepdf-* && sed -i 's/use_scm_version=True,/use_scm_version=True, version="4.3.1",/' setup.py \
+ && wine python3.exe -m pip install --no-build-isolation . \
+ && cd .. && rm -rf pikepdf-* \
+ && wine python3.exe -m pip install 'img2pdf==0.4.3' https://github.com/jeromerobert/cx_Freeze/zipball/db061df6f0b6bfc190a9557470e4436dc743dc8a \
+ && wineserver --wait
