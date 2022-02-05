@@ -3,3 +3,4 @@ RUN apk add  py3-pip py3-distutils-extra py3-pikepdf py3-cairo py3-atspi \
  py3-wheel py3-gobject3 py3-pillow poppler-glib gtk+3.0 intltool xvfb dbus \
  appstream desktop-file-utils bash curl
 RUN pip install https://gitlab.com/dogtail/dogtail/-/archive/6817c16/dogtail-6817c16.tar.gz coverage python-dateutil img2pdf
+RUN apk add libhandy1
