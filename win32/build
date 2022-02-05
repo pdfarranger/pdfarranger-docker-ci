@@ -1,3 +1,2 @@
 #! /bin/sh
-docker build --network=container:redsocks-container_redsocks_1 -t jeromerobert/wine-mingw64:1.7.0 .
-docker build -t jeromerobert/wine-mingw64:latest .
+docker build --network=container:redsocks-container_redsocks_1 -t jeromerobert/wine-mingw64:1.7.1 .

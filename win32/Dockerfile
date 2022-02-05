@@ -43,3 +43,4 @@ RUN wine python3.exe -m pip install wheel packaging python-dateutil keyboard 'py
  && cd .. && rm -rf pikepdf-* \
  && wine python3.exe -m pip install 'img2pdf==0.4.3' https://github.com/jeromerobert/cx_Freeze/zipball/db061df6f0b6bfc190a9557470e4436dc743dc8a \
  && wineserver --wait
+RUN pacman -Sy --noconfirm mingw-w64-x86_64-libhandy
