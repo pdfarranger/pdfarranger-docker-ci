@@ -9,12 +9,10 @@ echo "URL: $URL"
 # Download spec
 curl -o pdfarranger.spec -L $URL
 
-echo "Download source as described in spec"
-spectool -g pdfarranger.spec
-
 mkdir -p ~/rpmbuild/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
 
-mv pdfarranger-*.tar.gz ~/rpmbuild/SOURCES/
+echo "Download source as described in spec"
+spectool --get-files --sourcedir pdfarranger.spec
 
 echo "Starting rpm build"
 rpmbuild -ba pdfarranger.spec 
