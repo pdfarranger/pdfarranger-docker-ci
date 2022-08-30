@@ -1,2 +1,2 @@
 #! /bin/sh
-docker build --network=container:redsocks-container_redsocks_1 -t jeromerobert/pdfarranger-docker-ci:1.4.1 .
+docker build --network=container:redsocks-container_redsocks_1 -t jeromerobert/pdfarranger-docker-ci:1.5.0 .
