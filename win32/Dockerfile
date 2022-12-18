@@ -24,10 +24,10 @@ RUN cd /mingw64/share/glib-2.0/schemas \
  && wine cmd /c /mingw64/bin/glib-compile-schemas.exe . \
  && wineserver --wait
 ENV WINEDEBUG=-all
-RUN wine python3.exe -m pip install wheel packaging python-dateutil keyboard \
+RUN wine python3.exe -m pip install wheel packaging python-dateutil keyboard 'https://github.com/jeromerobert/cx_Freeze/zipball/db061df6f0b6bfc190a9557470e4436dc743dc8a' darkdetect \
  && wineserver --wait
-RUN curl -s -L 'https://files.pythonhosted.org/packages/29/d5/f825bb8bfd37bd352ec0ae6591215b3ab52ac6f1f7990d210de227c4eaa5/pikepdf-6.2.5.tar.gz' | tar xz \
+RUN curl -s -L 'https://files.pythonhosted.org/packages/1e/bf/e003c274ea2cf178448357549b444059276b674c7d6a7601320be873d133/pikepdf-6.2.6.tar.gz' | tar xz \
  && cd pikepdf-* && wine python3.exe -m pip install --no-build-isolation . \
  && cd .. && rm -rf pikepdf-* \
- && wine python3.exe -m pip install 'img2pdf==0.4.4' https://github.com/jeromerobert/cx_Freeze/zipball/db061df6f0b6bfc190a9557470e4436dc743dc8a \
+ && wine python3.exe -m pip install 'img2pdf==0.4.4' \
  && wineserver --wait
