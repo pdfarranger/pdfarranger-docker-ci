@@ -36,7 +36,7 @@ RUN cd /mingw64/share/glib-2.0/schemas \
  && wine cmd /c /mingw64/bin/glib-compile-schemas.exe . \
  && wineserver --wait
 ENV WINEDEBUG=-all
-RUN wine python3.exe -m pip install wheel packaging python-dateutil keyboard 'pybind11==2.9.0' \
+RUN wine python3.exe -m pip install wheel packaging python-dateutil keyboard darkdetect 'pybind11==2.9.0' \
  && curl -L 'https://files.pythonhosted.org/packages/1f/d3/553847428391192ea7a2ab8f24be3b42071d515bca7be78ad094f53160c6/pikepdf-4.3.1.tar.gz#sha256=8836e6060534c7245c8d736e93600667b928c767a012a73bb567f56bbe3d985c' | tar xz \
  && cd pikepdf-* && sed -i 's/use_scm_version=True,/use_scm_version=True, version="4.3.1",/' setup.py \
  && wine python3.exe -m pip install --no-build-isolation . \
