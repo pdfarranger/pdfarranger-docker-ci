@@ -1,2 +1,3 @@
 #! /bin/sh
-docker build --network=container:redsocks-container_redsocks_1 -t jeromerobert/wine-mingw64:1.8.1 .
+#docker build --network=container:redsocks-container_redsocks_1 -t jeromerobert/wine-mingw64:1.9.0
+podman build -t docker.io/jeromerobert/wine-mingw64:1.9.0 .
