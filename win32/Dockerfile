@@ -25,10 +25,6 @@ RUN cd /mingw64/share/glib-2.0/schemas \
  && wine cmd /c /mingw64/bin/glib-compile-schemas.exe . \
  && wineserver --wait
 ENV WINEDEBUG=-all
-RUN wine python3.exe -m pip install keyboard darkdetect \
- && wineserver --wait
-RUN curl -s -L 'https://files.pythonhosted.org/packages/ec/48/a9b6acd89aa6fb4cc2203be6c91992d5008a3c2a261322e47a2456cc692c/pikepdf-8.5.0.tar.gz' | tar xz \
- && cd pikepdf-* && wine python3.exe -m pip install --no-build-isolation . \
- && cd .. && rm -rf pikepdf-* \
- && wine python3.exe -m pip install 'img2pdf==0.4.4' \
+RUN SETUPTOOLS_USE_DISTUTILS=stdlib wine \
+ python3.exe -m pip install pikepdf==8.5.0 img2pdf==0.4.4 keyboard darkdetect \
  && wineserver --wait
