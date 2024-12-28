@@ -1,10 +1,10 @@
-FROM alpine:3.18.4
+FROM alpine:3.21.0
 RUN apk add pacman-makepkg curl libgcc py3-distutils-extra py3-setuptools intltool wine
 RUN mkdir -p /etc/pacman.d \
  && curl https://raw.githubusercontent.com/msys2/MSYS2-packages/master/pacman-mirrors/mirrorlist.mingw | sed 's|$repo|x86_64|g' > /etc/pacman.d/mirrorlist.mingw64 \
  && echo -e '[mingw64]\nInclude = /etc/pacman.d/mirrorlist.mingw64' >> /etc/pacman.conf \
  && pacman-key --init \
- && curl -O https://repo.msys2.org/msys/x86_64/msys2-keyring-1~20230703-1-any.pkg.tar.zst \
+ && curl -O https://repo.msys2.org/msys/x86_64/msys2-keyring-1~20241007-1-any.pkg.tar.zst \
  && pacman -U --noconfirm msys2-keyring* \
  && rm msys2-keyring* \
  && pacman-key --populate msys2
@@ -16,15 +16,14 @@ RUN pacman -Sy --noconfirm mingw-w64-x86_64-gtk3 mingw-w64-x86_64-python-gobject
  mingw-w64-x86_64-gettext mingw-w64-x86_64-gnutls mingw-w64-x86_64-python-pip \
  mingw-w64-x86_64-python-pillow mingw-w64-x86_64-libhandy \
  mingw-w64-x86_64-python-cx_Freeze
-# Creating loaders.cache with gdk-pixbuf-query-loaders.exe does not
-# work because gdiplus.dll is not found
-ADD loaders.cache /mingw64/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
+RUN wine /mingw64/bin/gdk-pixbuf-query-loaders.exe --update-cache \
+ && wineserver --wait
 RUN wine reg add "HKLM\\System\\CurrentControlSet\\Control\\Session Manager\\Environment" /f /v PATH /t REG_SZ /d "z:\\mingw64\\bin;c:\\windows\\system32" \
  && wineserver --wait
 RUN cd /mingw64/share/glib-2.0/schemas \
  && wine cmd /c /mingw64/bin/glib-compile-schemas.exe . \
  && wineserver --wait
 ENV WINEDEBUG=-all
-RUN SETUPTOOLS_USE_DISTUTILS=stdlib wine \
- python3.exe -m pip install pikepdf==8.5.0 img2pdf==0.4.4 python-dateutil keyboard darkdetect \
+RUN wine \
+ python3.exe -m pip install pikepdf==9.4.2 img2pdf==0.5.1 python-dateutil keyboard darkdetect \
  && wineserver --wait
