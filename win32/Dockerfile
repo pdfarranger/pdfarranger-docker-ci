@@ -10,11 +10,20 @@ RUN mkdir -p /etc/pacman.d \
  && pacman-key --populate msys2
 # alexpux@gmail.com signature is not accepted
 RUN echo -e "5\ny\n" | GNUPGHOME=/etc/pacman.d/gnupg gpg --no-tty --command-fd 0 --expert --edit-key AD351C50AE085775EB59333B5F92EFC1A47D45A1 trust
-RUN pacman -Sy --noconfirm mingw-w64-x86_64-gtk3 mingw-w64-x86_64-python-gobject \
- mingw-w64-x86_64-python-cairo mingw-w64-x86_64-poppler mingw-w64-x86_64-gcc \
- mingw-w64-x86_64-python-lxml mingw-w64-x86_64-qpdf mingw-w64-x86_64-pybind11 \
- mingw-w64-x86_64-gettext mingw-w64-x86_64-gnutls mingw-w64-x86_64-python-pip \
- mingw-w64-x86_64-python-pillow mingw-w64-x86_64-libhandy \
+RUN pacman -Sy --noconfirm \
+ mingw-w64-x86_64-gtk3 \
+ mingw-w64-x86_64-python-gobject \
+ mingw-w64-x86_64-python-cairo \
+ mingw-w64-x86_64-poppler \
+ mingw-w64-x86_64-gcc \
+ mingw-w64-x86_64-python-lxml \
+ mingw-w64-x86_64-qpdf \
+ mingw-w64-x86_64-pybind11 \
+ mingw-w64-x86_64-gettext \
+ mingw-w64-x86_64-gnutls \
+ mingw-w64-x86_64-python-pip \
+ mingw-w64-x86_64-python-pillow \
+ mingw-w64-x86_64-libhandy \
  mingw-w64-x86_64-python-cx-freeze \
  mingw-w64-x86_64-python-dateutil
 RUN wine /mingw64/bin/gdk-pixbuf-query-loaders.exe --update-cache \
