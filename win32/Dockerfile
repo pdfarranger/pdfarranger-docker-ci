@@ -1,4 +1,4 @@
-FROM alpine:3.21.0
+FROM alpine:3.22
 RUN apk add pacman-makepkg curl libgcc py3-distutils-extra py3-setuptools intltool wine
 RUN mkdir -p /etc/pacman.d \
  && curl https://raw.githubusercontent.com/msys2/MSYS2-packages/master/pacman-mirrors/mirrorlist.mingw | sed 's|$repo|x86_64|g' > /etc/pacman.d/mirrorlist.mingw64 \
