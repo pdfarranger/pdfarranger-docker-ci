@@ -15,15 +15,11 @@ RUN pacman -Sy --noconfirm \
  mingw-w64-x86_64-python-gobject \
  mingw-w64-x86_64-python-cairo \
  mingw-w64-x86_64-poppler \
- mingw-w64-x86_64-gcc \
- mingw-w64-x86_64-python-lxml \
  mingw-w64-x86_64-python-pikepdf \
- mingw-w64-x86_64-pybind11 \
  mingw-w64-x86_64-gettext \
  mingw-w64-x86_64-gnutls \
  mingw-w64-x86_64-img2pdf \
  mingw-w64-x86_64-python-pip \
- mingw-w64-x86_64-python-pillow \
  mingw-w64-x86_64-libhandy \
  mingw-w64-x86_64-python-cx-freeze \
  mingw-w64-x86_64-python-dateutil
