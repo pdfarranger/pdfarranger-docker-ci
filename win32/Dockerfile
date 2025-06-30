@@ -17,10 +17,11 @@ RUN pacman -Sy --noconfirm \
  mingw-w64-x86_64-poppler \
  mingw-w64-x86_64-gcc \
  mingw-w64-x86_64-python-lxml \
- mingw-w64-x86_64-qpdf \
+ mingw-w64-x86_64-python-pikepdf \
  mingw-w64-x86_64-pybind11 \
  mingw-w64-x86_64-gettext \
  mingw-w64-x86_64-gnutls \
+ mingw-w64-x86_64-img2pdf \
  mingw-w64-x86_64-python-pip \
  mingw-w64-x86_64-python-pillow \
  mingw-w64-x86_64-libhandy \
@@ -35,5 +36,5 @@ RUN cd /mingw64/share/glib-2.0/schemas \
  && wineserver --wait
 ENV WINEDEBUG=-all
 RUN wine \
- python3.exe -m pip install pikepdf==9.4.2 img2pdf==0.5.1 keyboard darkdetect \
+ python3.exe -m pip install keyboard darkdetect \
  && wineserver --wait
