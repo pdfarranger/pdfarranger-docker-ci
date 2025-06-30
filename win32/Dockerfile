@@ -15,7 +15,8 @@ RUN pacman -Sy --noconfirm mingw-w64-x86_64-gtk3 mingw-w64-x86_64-python-gobject
  mingw-w64-x86_64-python-lxml mingw-w64-x86_64-qpdf mingw-w64-x86_64-pybind11 \
  mingw-w64-x86_64-gettext mingw-w64-x86_64-gnutls mingw-w64-x86_64-python-pip \
  mingw-w64-x86_64-python-pillow mingw-w64-x86_64-libhandy \
- mingw-w64-x86_64-python-cx-freeze
+ mingw-w64-x86_64-python-cx-freeze \
+ mingw-w64-x86_64-python-dateutil
 RUN wine /mingw64/bin/gdk-pixbuf-query-loaders.exe --update-cache \
  && wineserver --wait
 RUN wine reg add "HKLM\\System\\CurrentControlSet\\Control\\Session Manager\\Environment" /f /v PATH /t REG_SZ /d "z:\\mingw64\\bin;c:\\windows\\system32" \
@@ -25,5 +26,5 @@ RUN cd /mingw64/share/glib-2.0/schemas \
  && wineserver --wait
 ENV WINEDEBUG=-all
 RUN wine \
- python3.exe -m pip install pikepdf==9.4.2 img2pdf==0.5.1 python-dateutil keyboard darkdetect \
+ python3.exe -m pip install pikepdf==9.4.2 img2pdf==0.5.1 keyboard darkdetect \
  && wineserver --wait
